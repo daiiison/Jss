@@ -1,0 +1,27 @@
+name: Playwright Tests
+on:
+  push:
+    branches: [ main ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+     strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Setup Dependencies
+      run: npm i
+
+    - name: Install Playwright
+      run: npx init playwright@latest
+    
+    - name: Run Tests
+      run: npx test
+
